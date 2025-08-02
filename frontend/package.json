@@ -1,0 +1,54 @@
+{
+  "name": "crypto-exchange-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@dfinity/agent": "^2.0.0",
+    "@dfinity/auth-client": "^2.0.0",
+    "@dfinity/identity": "^2.0.0",
+    "@dfinity/candid": "^2.0.0",
+    "@dfinity/ledger-icrc": "^2.9.1",
+    "@dfinity/utils": "^2.0.0",
+    "@types/node": "^16.18.68",
+    "@types/react": "^18.2.42",
+    "@types/react-dom": "^18.2.17",
+    "ethers": "^6.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "typescript": "^4.9.5",
+    "web-vitals": "^2.1.4"
+  },
+  "devDependencies": {
+    "@craco/craco": "^7.1.0",
+    "@types/jest": "^27.5.2"
+  },
+  "scripts": {
+    "start": "GENERATE_SOURCEMAP=false craco start",
+    "build": "GENERATE_SOURCEMAP=false craco build",
+    "test": "craco test",
+    "eject": "react-scripts eject",
+    "init-dfx": "./scripts/init-dfx.sh",
+    "deploy": "./scripts/deploy.sh",
+    "deploy:local": "dfx deploy --network local",
+    "deploy:ic": "dfx deploy --network ic"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

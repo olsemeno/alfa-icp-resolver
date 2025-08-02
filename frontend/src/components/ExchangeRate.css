@@ -1,0 +1,68 @@
+.exchange-rate-container {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rate-info {
+  margin-bottom: 15px;
+}
+
+.rate-label {
+  font-size: 14px;
+  color: #e0e0e0;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.rate-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #9933ff;
+  text-shadow: 0 0 10px rgba(102, 0, 204, 0.3);
+}
+
+.rate-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.detail-item:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  font-size: 14px;
+  color: #b0b0b0;
+}
+
+.detail-value {
+  font-size: 14px;
+  color: white;
+  font-weight: 600;
+} 

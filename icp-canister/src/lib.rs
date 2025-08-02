@@ -142,7 +142,7 @@ pub fn create_swap(request: CreateSwapRequest) -> SwapResponse {
         preimage: None,
         ledger_id: request.ledger_id,
     };
-    
+    //TODO verify amoun on canister
     SWAPS.with(|swaps| swaps.borrow_mut().insert(swap_id.clone(), swap.clone()));
     
     SwapResponse {
@@ -218,6 +218,8 @@ pub async fn withdraw(request: WithdrawRequest) -> SwapResponse {
                 transfer_result: None,
             };
         }
+
+        
         
         // Выполняем трансфер
         let transfer_result = transfer_service::transfer_icrc1(
