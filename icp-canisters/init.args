@@ -33,5 +33,8 @@
             };
         };
         token_name = opt "Internet Computer";
+        feature_flags = opt record { icrc2 = false };
+        maximum_number_of_accounts = null;
+        accounts_overflow_trim_quantity = null;
     }
 })

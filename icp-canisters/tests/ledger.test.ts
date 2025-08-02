@@ -25,7 +25,7 @@ describe("Basic test scenario", () => {
       idlFactory
     );
 
-     resolverAgent = await getTypedActor<ResolverService>(
+    resolverAgent = await getTypedActor<ResolverService>(
       __CANISTER_ID__,
       identity,
       resolverIdlFactory
@@ -50,36 +50,41 @@ describe("Basic test scenario", () => {
     expect(balance).toBeGreaterThan(0);
   });
 
-  test("create swap", async () => {
+  test("create contract", async () => {
     let preimage = "12345678901";
     let hashlock = sha256(preimage);
 
-    // Устанавливаем timelock в будущее (текущее время + 1 час)
-    const currentTime = BigInt(Date.now()) * 1000000n; // конвертируем в наносекунды
-    const futureTime = currentTime + 3600000000000n; // + 1 час в наносекундах
+    // Instantiate timelock in the future (current time + 1 hour)
+    const currentTime = BigInt(Date.now()) * BigInt(1000000); // convert to nanoseconds
+    const futureTime = currentTime + BigInt(3600000000000); // + 1 hour in nanoseconds
 
-    let swap = await resolverAgent.create_swap({
+    let contract = await resolverAgent.new_contract({
       hashlock: hashlock,
-      recipient: identity.getPrincipal().toString(),
+      receiver: identity.getPrincipal().toString(),
       ledger_id: __LEDGER_ID__,
-      amount: 1000000n,
+      amount: BigInt(1000000),
       timelock: futureTime,
     });
 
-    expect(swap.success).toBe(true);
-    expect(swap.swap_id).toBeDefined();
-    expect(swap.swap).toBeDefined();
+    console.log("Contract response:", JSON.stringify(contract, (key, value) =>
+      typeof value === 'bigint' ? value.toString() : value
+    , 2));
 
-    // let swap_id = await resolverAgent.get_swaps_by_recipient(identity.getPrincipal().toString());
+    expect(contract.success).toBe(true);
+    expect(contract.lock_id).toBeDefined();
+    expect(contract.contract).toBeDefined();
 
-    let withdraw = await resolverAgent.withdraw({
-      swap_id:  swap.swap_id[0]!,
+    let claim = await resolverAgent.claim({
+      lock_id: contract.lock_id[0]!,
       preimage: preimage,
     });
 
-    // console.log(withdraw.success, withdraw.swap , withdraw.transfer_result, withdraw.message, withdraw.swap_id);
-    expect(withdraw.success).toBe(true);
-    expect(withdraw.swap).toBeDefined();
+    console.log("Claim response:", JSON.stringify(claim, (key, value) =>
+      typeof value === 'bigint' ? value.toString() : value
+    , 2));
+
+    expect(claim.success).toBe(true);
+    expect(claim.contract).toBeDefined();
 
     let balance = await ledgerAgent.icrc1_balance_of({
       owner: identity.getPrincipal(),

@@ -1,0 +1,37 @@
+{
+  "name": "icp-fusion-resolver",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node src/index.ts",
+    "build": "tsc",
+    "test": "mocha -r ts-node/register tests/**/*.test.ts",
+    "server": "ts-node src/index.ts",
+    "resolver": "USE_MOCK=true ts-node src/index.ts",
+    "swap": "ts-node src/frontend/swap.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@1inch/cross-chain-sdk": "^0.2.1-rc.58",
+    "@dfinity/agent": "^3.1.0",
+    "axios": "^1.11.0",
+    "dotenv": "^17.2.1",
+    "ethers": "^6.15.0",
+    "ws": "^8.18.3"
+  },
+  "devDependencies": {
+    "@1inch/limit-order-sdk": "^4.13.0",
+    "@types/chai": "^5.2.2",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^24.1.0",
+    "@types/sinon": "^17.0.4",
+    "chai": "^5.2.1",
+    "mocha": "^11.7.1",
+    "sinon": "^21.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  }
+}

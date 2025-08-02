@@ -11,7 +11,8 @@
     "ledger": {
       "type": "custom",
       "candid": "ledger.did",
-      "wasm": "ledger.wasm"
+      "wasm": "ledger.wasm",
+      "init": "init.args"
     }
   },
   "defaults": {

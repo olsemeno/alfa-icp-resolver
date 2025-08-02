@@ -2,7 +2,7 @@ import { execSync } from 'child_process';
 import { existsSync } from 'fs';
 import { join } from 'path';
 
-// Глобальные переменные для тестов
+// Global variables for tests
 declare global {
   var __TEST_MODE__: boolean;
   var __DFX_NETWORK__: string;
@@ -10,11 +10,11 @@ declare global {
   var __LEDGER_ID__: string;
 }
 
-// Установка глобальных переменных
+// Setting global variables
 globalThis.__TEST_MODE__ = true;
 globalThis.__DFX_NETWORK__ = 'local';
 
-// Функция для запуска команды dfx
+// Function to run dfx command
 export function runDfxCommand(command: string): string {
   try {
     return execSync(`dfx ${command}`, { 
@@ -27,7 +27,7 @@ export function runDfxCommand(command: string): string {
   }
 }
 
-// Функция для проверки, запущен ли dfx
+// Function to check if dfx is running
 export function isDfxRunning(): boolean {
   try {
     execSync('dfx ping', { stdio: 'ignore' });
@@ -37,7 +37,7 @@ export function isDfxRunning(): boolean {
   }
 }
 
-// Функция для получения ID кандисты
+// Function to get canister ID
 export function getCanisterId(canisterName: string): string {
   try {
     const output = runDfxCommand(`canister id ${canisterName}`);
@@ -48,7 +48,7 @@ export function getCanisterId(canisterName: string): string {
   }
 }
 
-// Функция для получения ID лэджера
+// Function to get ledger ID
 export function getLedgerId(): string {
   try {
     const output = runDfxCommand('canister id ledger');
@@ -59,7 +59,7 @@ export function getLedgerId(): string {
   }
 }
 
-// Функция для развертывания лэджера
+// Function to deploy ledger
 export function deployLedger(): void {
   try {
     console.log('Deploying ICP ledger...');
@@ -71,7 +71,7 @@ export function deployLedger(): void {
   }
 }
 
-// Функция для минтинга ICP токенов
+// Function to mint ICP tokens
 export function mintICP(to: string, amount: string): void {
   try {
     console.log(`Minting ${amount} ICP to ${to}...`);
@@ -83,7 +83,7 @@ export function mintICP(to: string, amount: string): void {
   }
 }
 
-// Функция для получения баланса
+// Function to get balance
 export function getBalance(account: string): string {
   try {
     
@@ -95,7 +95,7 @@ export function getBalance(account: string): string {
   }
 }
 
-// Функция для развертывания нашего кандисты
+// Function to deploy resolver
 export function deployResolver(): void {
   try {
     console.log('Deploying resolver canister...');
@@ -107,21 +107,21 @@ export function deployResolver(): void {
   }
 }
 
-// Инициализация тестового окружения
+// Initialization of test environment
 beforeAll(async () => {
   console.log('Setting up test environment...');
   const ledgerScriptPath = join(__dirname, 'ledger.sh');
 
-  // Проверяем, запущен ли dfx
+  // Check if dfx is running
   if (!isDfxRunning()) {
     console.log('Starting dfx...');
     runDfxCommand('start --background');
     
-    // Ждем немного для запуска
+    // Wait for a while to start
     await new Promise(resolve => setTimeout(resolve, 5000));
   }
   
-  // Развертываем лэджер
+  // Deploy ledger
   if (!existsSync(ledgerScriptPath)) {
     throw new Error(`Ledger script not found at ${ledgerScriptPath}`);
   }
@@ -129,7 +129,7 @@ beforeAll(async () => {
   console.log('Starting ledger deployment...');
   
   try {
-    // Запускаем скрипт ledger.sh
+    // Run ledger.sh script
     const result = execSync(`bash ${ledgerScriptPath}`, {
       cwd: process.cwd(),
       encoding: 'utf8',
@@ -144,19 +144,19 @@ beforeAll(async () => {
     throw error;
   }
   
-  // Развертываем наш кандисту
+  // Deploy resolver
   deployResolver();
   
-  // Получаем ID кандист
+  // Get canister ID
   globalThis.__CANISTER_ID__ = getCanisterId('alfa_icp_resolver');
   globalThis.__LEDGER_ID__ = getLedgerId();
 
   console.log(`Canister ID: ${globalThis.__CANISTER_ID__}`);
   console.log(`Ledger ID: ${globalThis.__LEDGER_ID__}`);
-}, 60000); // 60 секунд таймаут
+}, 60000); // 60 seconds timeout
 
-// Очистка после тестов
+// Cleanup after tests
 afterAll(async () => {
   console.log('Cleaning up test environment...');
-  // Можно добавить очистку если нужно
-}); 
+  // Add cleanup if needed
+});
