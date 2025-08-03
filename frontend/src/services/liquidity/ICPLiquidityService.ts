@@ -1,10 +1,9 @@
-import { ICRC1Service } from './icrc1Service';
-import { HashedTimeLockService } from './HashedTimeLockICPService';
-import { toE8s } from '../utils/icp';
-import deploymentAddresses from '../../../shared/blockchain/deployment-addresses.json';
+import { ICRC1Service } from '../icrc1Service';
+import { HashedTimeLockService } from '../HashedTimeLockICPService';
+import { toE8s } from '../../utils/icp';
+import deploymentAddresses from '../../blockchain/deployment-addresses.json';
 
 const hashedTimeLockIcpCanisterId = deploymentAddresses.icp.dev.HashedTimeLock;
-const ledgerIcpCanisterId = deploymentAddresses.icp.dev.Ledger;
 
 /**
  * 🔒 Locks liquidity on ICP via HashedTimeLock canister
@@ -13,7 +12,7 @@ export async function lockLiquidityICP(
   identity: any,
   receiver: string,
   hashlock: string,
-  timelock: bigint,
+  timelock: number | bigint,
   amount: string
 ) {
   try {
@@ -26,7 +25,7 @@ export async function lockLiquidityICP(
     console.log('✅ [ICP] Ledger transfer complete. TxHash:', txHash);
 
     // 2️⃣ Создание контракта в HashedTimeLock канистре
-    const response = await hashedTimeLockService.new_contract(
+    const timeLockResponse = await hashedTimeLockService.new_contract(
       identity,
       receiver,
       hashlock,
@@ -34,11 +33,11 @@ export async function lockLiquidityICP(
       amount
     );
 
-    console.log('✅ [ICP] TimeLock contract created:', response);
+    console.log('✅ [ICP] TimeLock contract created:', timeLockResponse);
 
     return {
       txHash,
-      contractResponse: response,
+      timeLockResponse
     };
   } catch (error) {
     console.error('❌ [ICP] Lock liquidity failed:', error);

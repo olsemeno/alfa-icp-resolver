@@ -1,23 +1,27 @@
 import { ethers } from 'ethers';
-import HashedTimeLockABI from '../../../shared/blockchain/interfaces/evm/hashedTimeLock.evm.abi.json';
-import deploymentAddresses from '../../../shared/blockchain/deployment-addresses.json';
+import HashedTimeLockABI from '../../blockchain/interfaces/evm/hashedTimeLock.evm.abi.json';
+import deploymentAddresses from '../../blockchain/deployment-addresses.json';
+import resolverAddresses from '../../blockchain/resolver-addresses.json';
 
 // ⚠️ тут указываем RPC для сети, где деплоен контракт
 const RPC_URL = process.env.ETH_RPC_URL || 'http://127.0.0.1:8545';
 
 const hashedTimeLockEvmAddress = deploymentAddresses.evm.localhost.HashedTimeLock;
+const resolverEvmAddress = resolverAddresses.evm.localhost;
 
-// создаём provider + signer (резолвер будет подписывать транзакции)
-const provider = new ethers.JsonRpcProvider(RPC_URL);
-const signer = new ethers.Wallet(process.env.RESOLVER_PRIVATE_KEY!, provider);
+async function getContract(walletState: any) {
+  if (!window.ethereum) {
+    throw new Error('MetaMask is not installed');
+  }
 
-function getContract() {
+  const provider = new ethers.BrowserProvider(window.ethereum);
+  const signer = await provider.getSigner(walletState.eth.address);
   return new ethers.Contract(hashedTimeLockEvmAddress, HashedTimeLockABI.abi, signer);
 }
 
 /** 🔒 Lock liquidity on Ethereum */
-export async function lockLiquidityETH(receiver: string, hashlock: string, timelock: number | bigint, amount: string) {
-  const contract = getContract();
+export async function lockLiquidityETH(receiver: string, hashlock: string, timelock: number | bigint, amount: string, walletState: any) {
+  const contract = await getContract(walletState);
   const amountInWei = ethers.parseEther(amount);
 
   console.log("🔧 [ETH] Lock liquidity:", { receiver, hashlock, timelock, amount });
@@ -29,8 +33,8 @@ export async function lockLiquidityETH(receiver: string, hashlock: string, timel
 }
 
 /** ✅ Claim locked liquidity */
-export async function claimLiquidityETH(lockId: string, preimage: string) {
-  const contract = getContract();
+export async function claimLiquidityETH(lockId: string, preimage: string, walletState: any) {
+  const contract = await getContract(walletState);
 
   console.log("✅ [ETH] Claim:", { lockId, preimage });
 
@@ -41,8 +45,8 @@ export async function claimLiquidityETH(lockId: string, preimage: string) {
 }
 
 /** 🔄 Refund locked liquidity */
-export async function refundLiquidityETH(lockId: string) {
-  const contract = getContract();
+export async function refundLiquidityETH(lockId: string, walletState: any) {
+  const contract = await getContract(walletState);
 
   console.log("🔄 [ETH] Refund:", { lockId });
 

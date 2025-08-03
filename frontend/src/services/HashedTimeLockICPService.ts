@@ -1,10 +1,10 @@
 import { HttpAgent } from '@dfinity/agent';
 import { Actor } from '@dfinity/agent';
 
-import { idlFactory as hashTimeLockIdlFactory } from "../../../shared/blockchain/interfaces/icp/hashedTimeLock.did.js";
-import type { _SERVICE as _HashedTimeLockService, ContractResponse } from "../../../shared/blockchain/interfaces/icp/hashedTimeLock.did";
-import deploymentAddresses from "../../../shared/blockchain/deployment-addresses.json";
-import { toE8s } from '../utils/icp.js';
+import { idlFactory as hashTimeLockIdlFactory } from '../blockchain/interfaces/icp/hashedTimeLock.did.js';
+import type { _SERVICE as _HashedTimeLockService, ContractResponse } from '../blockchain/interfaces/icp/hashedTimeLock.did';
+import deploymentAddresses from '../blockchain/deployment-addresses.json';
+import { toE8s } from '../utils/icp';
 
 const ICP_HOST = "https://ic0.app";
 const hashedTimeLockIcpCanisterId = deploymentAddresses.icp.dev.HashedTimeLock;
