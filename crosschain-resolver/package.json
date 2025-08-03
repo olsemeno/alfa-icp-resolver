@@ -1,5 +1,5 @@
 {
-  "name": "icp-fusion-resolver",
+  "name": "crosschain-resolver",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -16,7 +16,12 @@
   "description": "",
   "dependencies": {
     "@1inch/cross-chain-sdk": "^0.2.1-rc.58",
-    "@dfinity/agent": "^3.1.0",
+    "@dfinity/agent": "^2.0.0",
+    "@dfinity/auth-client": "^2.0.0",
+    "@dfinity/identity": "^2.0.0",
+    "@dfinity/candid": "^2.0.0",
+    "@dfinity/ledger-icrc": "^2.9.1",
+    "@dfinity/utils": "^2.0.0",
     "axios": "^1.11.0",
     "dotenv": "^17.2.1",
     "ethers": "^6.15.0",
