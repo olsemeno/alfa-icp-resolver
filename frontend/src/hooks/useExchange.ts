@@ -1,7 +1,29 @@
 import { useState, useCallback } from 'react';
 import { Currency, ExchangeForm, ExchangeRate } from '../types';
 import { ethers } from 'ethers';
+import { HttpAgent, Actor } from "@dfinity/agent";
+import { Ed25519KeyIdentity } from "@dfinity/identity";
+
+import { HashedTimeLockService } from '../services/HashedTimeLockService';
 import { ICRC1Service } from '../services/icrc1Service';
+import { isEthereumAvailable, decodeEvmError } from '../utils/ethereum';
+import { generateSecretAndHashlockEVM, generateSecretAndHashlockICP, generateTimelockEVM, generateTimelockICP } from '../utils/hashlock';
+
+import { idlFactory as hashTimeLockIdlFactory } from "../blockchain/interfaces/icp/hashedTimeLock.did.js";
+import type { _SERVICE as _HashedTimeLockService } from "../blockchain/interfaces/icp/hashedTimeLock.did";
+import resolverAddresses from '../blockchain/resolver-addresses.json';
+import HashedTimeLockABI from "../blockchain/interfaces/evm/hashedTimeLock.evm.abi.json";
+import deploymentAddresses from "../blockchain/deployment-addresses.json";
+
+const hashedTimeLockEvmAddress = deploymentAddresses.evm.localhost.HashedTimeLock;
+const hashedTimeLockIcpCanisterId = deploymentAddresses.icp.dev.HashedTimeLock;
+const ledgerIcpCanisterId = deploymentAddresses.icp.dev.Ledger;
+
+const resolverEvmAddress = resolverAddresses.evm.localhost;
+const resolverIcpAddress = resolverAddresses.icp.dev;
+
+const TIME_LOCK_DURATION_SECONDS = 3600;
+const ICP_HOST = "https://ic0.app";
 
 // Моковые данные для курсов обмена
 const mockExchangeRates: ExchangeRate[] = [
@@ -58,20 +80,23 @@ export const useExchange = () => {
 
   // Автоматически получаем адрес целевого кошелька
   const getTargetWalletAddress = useCallback((toCurrency: Currency, walletState: any) => {
-    // Для ETH транзакций всегда используем ETH адрес
-    const ethAddress = '0xB1107F4141fb56b07D15b65F1629451443Ff8F8e';
-    console.log('Using ETH recipient address:', ethAddress);
-    return ethAddress;
+    console.log('Using ETH recipient address:', hashedTimeLockEvmAddress);
+
+    return hashedTimeLockEvmAddress;
   }, []);
 
   // Функция для отправки ETH транзакции через MetaMask
-  const sendEthTransaction = useCallback(async (amount: string, recipientAddress: string, walletState: any) => {
+  const sendEthTransaction = useCallback(async (
+    amount: string,
+    recipientAddress: string,
+    hashlock: string,
+    timelock: number | bigint,
+    walletState: any
+  ) => {
     try {
-      if (!window.ethereum) {
+      if (!isEthereumAvailable()) {
         throw new Error('MetaMask is not installed');
       }
-
-      const ethereum = window.ethereum;
       
       // Проверяем и форматируем адрес
       console.log('Recipient address before validation:', recipientAddress);
@@ -81,32 +106,18 @@ export const useExchange = () => {
       if (!ethers.isAddress(recipientAddress)) {
         throw new Error(`Invalid recipient address: ${recipientAddress}`);
       }
-      
-      // Приводим адрес к checksum формату
-      const checksumAddress = ethers.getAddress(recipientAddress);
-      console.log('Checksum address:', checksumAddress);
-      
-      // Конвертируем сумму в wei
-      const amountInWei = ethers.parseEther(amount);
-      
-      // Создаем объект транзакции
-      const transactionParameters = {
-        to: checksumAddress,
-        value: amountInWei.toString(),
-        from: walletState.eth.address,
-      };
 
-      console.log('Sending transaction with parameters:', transactionParameters);
+      const receipt = await createEvmTimeLock(
+        recipientAddress,
+        hashlock,
+        timelock,
+        amount,
+        walletState
+      );
 
-      // Отправляем транзакцию через MetaMask
-      const txHash = await ethereum.request({
-        method: 'eth_sendTransaction',
-        params: [transactionParameters],
-      });
+      console.log('Evm Time Lock transaction sent successfully:', receipt);
 
-      console.log('Transaction sent successfully:', txHash);
-      return txHash;
-
+      return receipt;
     } catch (error: any) {
       console.error('Error sending ETH transaction:', error);
       throw new Error(error.message || 'Failed to send transaction');
@@ -114,26 +125,46 @@ export const useExchange = () => {
   }, []);
 
   // Функция для отправки ICP транзакции
-  const sendIcpTransaction = useCallback(async (amount: string, walletState: any) => {
+  const sendIcpTransaction = useCallback(async (
+    amount: string,
+    recipientAddress: string,
+    hashlock: string,
+    timelock: number | bigint,
+    walletState: any
+  ) => {
     try {
+      console.log('==== ICP identity:', walletState.icp.identity.getPrincipal().toText());
+
       console.log('Wallet state for ICP transaction:', walletState);
       console.log('ICP identity available:', !!walletState.icp.identity);
-      
+
       if (!walletState.icp.identity) {
         throw new Error('ICP identity not connected');
       }
 
-      // Используем тестовый principal для демонстрации
-      const testRecipientPrincipal = 'xc6sh-dlnkq-hqmkc-eblci-3p6z6-blkwe-zpgo2-vpfn7-qo4v2-k4zyl-rae';
-      
       const icrc1Service = new ICRC1Service();
-      const txHash = await icrc1Service.transfer(
+      const txHashTransfer = await icrc1Service.transfer(
         walletState.icp.identity,
-        testRecipientPrincipal,
+        hashedTimeLockIcpCanisterId,
         amount
       );
 
-      return txHash;
+      console.log('✅ ICP ledger transfer sent. TxHash:', txHashTransfer);
+  
+      const timeLockResponse = await createIcpTimeLock(
+        recipientAddress,
+        hashlock,
+        timelock,
+        amount,
+        walletState
+      );
+  
+      console.log('✅ ICP Time Lock created:', timeLockResponse);
+  
+      return {
+        txHashTransfer,
+        timeLockResponse,
+      };
     } catch (error: any) {
       console.error('Error sending ICP transaction:', error);
       throw new Error(error.message || 'Failed to send ICP transaction');
@@ -157,10 +188,36 @@ export const useExchange = () => {
     setTransferError(null);
 
     try {
-      const recipientAddress = '0xB1107F4141fb56b07D15b65F1629451443Ff8F8e';
-      console.log('Sending ETH transaction to:', recipientAddress);
-      const txHash = await sendEthTransaction(form.amount, recipientAddress, walletState);
-      alert(`Transaction sent successfully!\nTransaction Hash: ${txHash}`);
+      // 1️⃣ Генерация секрета
+      const { secret, hashlock } = generateSecretAndHashlockEVM();
+      console.log("🔐 Secret:", secret);
+      console.log("🔒 Hashlock:", hashlock);
+
+      // 2️⃣ Генерация timelock
+      const timelock = await generateTimelockEVM(TIME_LOCK_DURATION_SECONDS);
+
+      console.log('📤 Receiver address:', resolverEvmAddress);
+      console.log('📋 Contract address:', hashedTimeLockEvmAddress);
+
+      const receipt = await sendEthTransaction(
+        form.amount,
+        resolverEvmAddress,
+        hashlock,
+        timelock,
+        walletState
+      );
+
+      const event = receipt.logs.find(
+        (log: any) => log.fragment?.name === "TimeLockContractCreated"
+      );
+
+      const lockId = event?.args?.lockId;
+      console.log("🔑 Lock ID:", lockId);
+
+      // Save secret to local storage
+      localStorage.setItem(`secret:${lockId}`, secret);
+
+      alert(`Transaction sent successfully!\nTransaction Hash: ${receipt.hash}`);
     } catch (error: any) {
       console.error('Transfer error:', error);
       setTransferError(error.message || 'Transfer failed');
@@ -176,11 +233,40 @@ export const useExchange = () => {
     setShowConfirmModal(false);
 
     try {
-      const txHash = await sendIcpTransaction(form.amount, walletState);
-      alert(`ICP Transaction sent successfully!\nBlock index: ${txHash}`);
+      // 1️⃣ Генерация секрета
+      const { secret, hashlock } = generateSecretAndHashlockICP();
+      console.log("🔐 Secret:", secret);
+      console.log("🔒 Hashlock:", hashlock);
+
+      // 2️⃣ Генерация timelock
+      const timelock = await generateTimelockICP(TIME_LOCK_DURATION_SECONDS);
+
+      const { txHashTransfer, timeLockResponse } = await sendIcpTransaction(
+        form.amount,
+        resolverIcpAddress,
+        hashlock,
+        timelock,
+        walletState
+      );
+
+      const lockId = timeLockResponse.lock_id.toString();
+      console.log("🔑 Lock ID:", lockId);
+
+      // Save secret to local storage
+      localStorage.setItem(`secret:${lockId}`, secret);
+
+      alert(
+        `ICP Transaction sent successfully!\nBlock index: ${txHashTransfer}\n` +
+        `Time Lock success: ${timeLockResponse.success}\n` +
+        `Time Lock message: ${timeLockResponse.message}\n` +
+        `Time Lock lock_id: ${timeLockResponse.lock_id}`
+      );
+
     } catch (error: any) {
       console.error('ICP Transfer error:', error);
+
       setTransferError(error.message || 'ICP Transfer failed');
+
       alert(`ICP Transfer failed: ${error.message}`);
     } finally {
       setIsTransferring(false);
@@ -203,4 +289,101 @@ export const useExchange = () => {
     confirmIcpTransfer,
     closeConfirmModal,
   };
-}; 
+};
+
+const getEvmHashedTimeLockContract = async (walletState: any) => {
+  if (!window.ethereum) {
+    throw new Error('MetaMask is not installed');
+  }
+
+  const provider = new ethers.BrowserProvider(window.ethereum);
+  const signer = await provider.getSigner(walletState.eth.address);
+
+  return new ethers.Contract(hashedTimeLockEvmAddress, HashedTimeLockABI.abi, signer);
+}
+
+const createEvmTimeLock = async (
+  receiver: string,
+  hashlock: string,
+  timelock: number | bigint,
+  amount: string,
+  walletState: any
+) => {
+  try {
+    console.log("🔧 Creating Evm Time Lock with parameters:");
+    console.log("  - Receiver:", receiver);
+    console.log("  - Hashlock:", hashlock);
+    console.log("  - Timelock:", timelock);
+    console.log("  - Amount:", amount);
+    console.log("  - Wallet address:", walletState.eth.address);
+
+    const contract = await getEvmHashedTimeLockContract(walletState);
+    const amountInWei = ethers.parseEther(amount);
+
+    console.log("  - Amount in Wei:", amountInWei.toString());
+
+    const tx = await contract.newContractETH(
+      receiver,
+      hashlock,
+      timelock,
+      { value: amountInWei } // важный момент — value указывает сколько ETH прикрепляем
+    );
+
+    console.log("⏳ Evm Time Lock transaction sent:", tx.hash);
+
+    const receipt = await tx.wait();
+
+    console.log("✅ Evm Time Lock transaction confirmed:", receipt);
+
+    return receipt;
+  } catch (error: any) {
+    const decoded = decodeEvmError(HashedTimeLockABI.abi, error);
+
+    if (decoded) {
+      console.error(`❌ Custom error: ${decoded.name}`);
+      if (decoded.args.length) {
+        console.error("📊 Args:", decoded.args.map(a => a.toString()));
+      }
+    } else {
+      console.error("❌ Unknown EVM error:", error);
+    }
+
+    throw error;
+  }
+};
+
+const createIcpTimeLock = async (
+  receiver: string,
+  hashlock: string,
+  timelock: number | bigint,
+  amount: string,
+  walletState: any
+) => {
+  try {
+    console.log("🔧 Creating ICP Time Lock...");
+    console.log("Receiver:", receiver);
+    console.log("Hashlock:", hashlock);
+    console.log("Timelock:", timelock);
+    console.log("Amount:", amount);
+
+    if (!walletState.icp.identity) {
+      throw new Error("ICP identity is not connected");
+    }
+
+    const hashedTimeLockService = new HashedTimeLockService();
+    const response = await hashedTimeLockService.new_contract(
+      walletState.icp.identity,
+      receiver,
+      hashlock,
+      timelock,
+      amount,
+    )
+
+    console.log('✅ ICP Time Lock success:', response.success);
+
+    return response;
+  } catch (error) {
+    console.error("❌ Error creating ICP Time Lock:", error);
+    throw error;
+  }
+};

@@ -99,7 +99,7 @@ export function getBalance(account: string): string {
 export function deployResolver(): void {
   try {
     console.log('Deploying resolver canister...');
-    runDfxCommand('deploy alfa_icp_resolver');
+    runDfxCommand('deploy hashed_time_lock');
     console.log('Resolver canister deployed successfully');
   } catch (error) {
     console.error('Failed to deploy resolver');
@@ -148,7 +148,7 @@ beforeAll(async () => {
   deployResolver();
   
   // Get canister ID
-  globalThis.__CANISTER_ID__ = getCanisterId('alfa_icp_resolver');
+  globalThis.__CANISTER_ID__ = getCanisterId('hashed_time_lock');
   globalThis.__LEDGER_ID__ = getLedgerId();
 
   console.log(`Canister ID: ${globalThis.__CANISTER_ID__}`);

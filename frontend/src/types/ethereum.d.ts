@@ -5,6 +5,9 @@ interface EthereumProvider {
   removeListener: (eventName: string, handler: (...args: any[]) => void) => void;
   selectedAddress?: string;
   networkVersion?: string;
+  chainId?: string;
+  isConnected?: () => boolean;
+  enable?: () => Promise<string[]>;
 }
 
 declare global {

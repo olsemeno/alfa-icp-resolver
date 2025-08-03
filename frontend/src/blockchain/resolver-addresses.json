@@ -1,0 +1,9 @@
+{
+  "evm": {
+    "localhost": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
+  },
+  "icp": {
+    "localhost": "tlnf3-uzald-4eqys-xyoja-badcf-dtj6o-f3kvb-7kw6d-uszsg-ezkzl-vqe",
+    "dev": "kou3e-6ofkv-gvnz3-jn2jd-64ltl-pstyq-22bvo-2wm52-izn6x-mkheh-7qe"
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "name": "alfa-icp-resolver-tests",
+  "name": "hashed-time-lock",
   "version": "1.0.0",
   "description": "Tests for Alfa ICP HashedTimelock Contract",
   "main": "index.js",

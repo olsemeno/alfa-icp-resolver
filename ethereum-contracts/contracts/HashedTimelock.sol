@@ -232,6 +232,14 @@ contract HashedTimeLock {
         return contracts[_lockId].preimage;
     }
 
+    /**
+     * @dev Returns the minimum time lock duration
+     * @return The minimum time lock duration
+     */
+    function getMinTimeLockDuration() external view returns (uint256) {
+        return MIN_TIME_LOCK_DURATION;
+    }
+
     // ======= Public functions =======
     /**
      * @dev Returns the complete TimeLockContract structure for a given lockId

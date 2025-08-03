@@ -100,8 +100,8 @@ test('should create a valid swap', () => {
 If tests fail:
 
 1. Check if DFX is running: `dfx ping`
-2. Check canister status: `dfx canister status alfa_icp_resolver`
-3. Check logs: `dfx canister call alfa_icp_resolver get_version`
+2. Check canister status: `dfx canister status hashed_time_lock`
+3. Check logs: `dfx canister call hashed_time_lock get_version`
 
 ## Adding New Tests
 

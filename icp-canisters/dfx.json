@@ -1,12 +1,12 @@
 {
   "canisters": {
-    "alfa_icp_resolver": {
+    "hashed-time-lock": {
       "type": "custom",
       "build": [
-        "cargo build --target wasm32-unknown-unknown --package alfa-icp-resolver --release"
+        "cargo build --target wasm32-unknown-unknown --package hashed-time-lock --release"
       ],
-      "candid": "src/alfa_icp_resolver.did",
-      "wasm": "target/wasm32-unknown-unknown/release/alfa_icp_resolver.wasm"
+      "candid": "src/hashed_time_lock.did",
+      "wasm": "target/wasm32-unknown-unknown/release/hashed_time_lock.wasm"
     },
     "ledger": {
       "type": "custom",
@@ -26,6 +26,18 @@
     "local": {
       "bind": "127.0.0.1:8000",
       "type": "ephemeral"
+    },
+    "dev": {
+      "providers": [
+        "https://icp0.io"
+      ],
+      "type": "persistent"
+    },
+    "ic": {
+      "providers": [
+        "https://icp0.io"
+      ],
+      "type": "persistent"
     }
   },
   "version": 1

@@ -9,11 +9,11 @@ This project implements the ICP side of the Alfa ICP Resolver, providing functio
 ## Project Structure
 
 ```
-alfa-icp-resolver/
+icp-canisters/
 ├── src/
 │   ├── lib.rs                 # Main Rust canister implementation
 │   ├── transfer_service.rs    # ICRC-1 transfer service
-│   └── alfa_icp_resolver.did # Candid interface definition
+│   └── hashed_time_lock.did # Candid interface definition
 ├── tests/
 │   ├── setup.ts              # Test environment setup
 │   ├── ledger.test.ts        # ICP ledger integration tests
