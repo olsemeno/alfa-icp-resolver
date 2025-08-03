@@ -1,0 +1,50 @@
+# GitHub Pages Configuration
+# This file is used by GitHub Pages to configure the site
+
+# Site settings
+title: Alfa ICP Resolver Documentation
+description: Cross-chain atomic swaps between Ethereum and Internet Computer
+author: Alfa Team
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+
+# Exclude from processing
+exclude:
+  - README.md
+  - .gitignore
+  - .github
+
+# Include files
+include:
+  - _assets
+  - _includes
+  - _layouts
+
+# Collections
+collections:
+  docs:
+    output: true
+    permalink: /:collection/:name/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "docs"
+    values:
+      layout: "default"
+
+# Plugins
+plugins:
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Theme settings (if using a theme)
+# theme: jekyll-theme-minimal
+
+# Custom settings
+baseurl: ""
+url: "https://your-username.github.io/alfa-icp-resolver" 

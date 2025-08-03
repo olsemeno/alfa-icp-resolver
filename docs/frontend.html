@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend - Alfa ICP Resolver</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet">
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            padding: 80px 0;
+        }
+        .code-block {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .component-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .component-card:hover {
+            transform: translateY(-3px);
+        }
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .tech-stack {
+            background-color: #f8f9fa;
+            padding: 60px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-link me-2"></i>Alfa ICP Resolver
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Overview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ethereum.html">Ethereum</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="icp.html">ICP</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="frontend.html">Frontend</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="resolver.html">Resolver</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold mb-4">
+                <i class="fas fa-desktop me-3"></i>Web Frontend
+            </h1>
+            <p class="lead mb-4">
+                React-based user interface for cross-chain atomic swap operations
+            </p>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="#features" class="btn btn-light btn-lg">
+                            <i class="fas fa-star me-2"></i>View Features
+                        </a>
+                            <a href="#setup" class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-rocket me-2"></i>Get Started
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-5" id="features">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-12">
+                    <h2 class="display-5 fw-bold">Frontend Features</h2>
+                    <p class="lead text-muted">Modern React application with comprehensive swap functionality</p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="card component-card h-100">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon bg-primary text-white mx-auto">
+                                <i class="fas fa-wallet fa-2x"></i>
+                            </div>
+                            <h5 class="card-title">Wallet Integration</h5>
+                            <p class="card-text">
+                                Seamless integration with MetaMask for Ethereum and Internet Identity for ICP.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card component-card h-100">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon bg-success text-white mx-auto">
+                                <i class="fas fa-exchange-alt fa-2x"></i>
+                            </div>
+                            <h5 class="card-title">Swap Interface</h5>
+                            <p class="card-text">
+                                Intuitive interface for creating and managing cross-chain atomic swaps.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card component-card h-100">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon bg-info text-white mx-auto">
+                                <i class="fas fa-chart-line fa-2x"></i>
+                            </div>
+                            <h5 class="card-title">Real-time Updates</h5>
+                            <p class="card-text">
+                                Live updates on swap status, exchange rates, and transaction progress.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card component-card h-100">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon bg-warning text-white mx-auto">
+                                <i class="fas fa-shield-alt fa-2x"></i>
+                            </div>
+                            <h5 class="card-title">Security Features</h5>
+                            <p class="card-text">
+                                Built-in security validation and transaction confirmation dialogs.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card component-card h-100">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon bg-danger text-white mx-auto">
+                                <i class="fas fa-mobile-alt fa-2x"></i>
+                            </div>
+                            <h5 class="card-title">Responsive Design</h5>
+                            <p class="card-text">
+                                Mobile-friendly interface that works on all devices and screen sizes.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card component-card h-100">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon bg-secondary text-white mx-auto">
+                                <i class="fas fa-history fa-2x"></i>
+                            </div>
+                            <h5 class="card-title">Transaction History</h5>
+                            <p class="card-text">
+                                Complete history of all swaps with detailed status tracking.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <section class="tech-stack">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-12">
+                    <h2 class="display-6 fw-bold">Technology Stack</h2>
+                    <p class="lead text-muted">Modern web technologies for optimal user experience</p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <i class="fab fa-react fa-4x text-primary mb-3"></i>
+                        <h5>React</h5>
+                        <p class="text-muted">Component-based UI library</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <i class="fab fa-js-square fa-4x text-warning mb-3"></i>
+                        <h5>TypeScript</h5>
+                        <p class="text-muted">Type-safe JavaScript</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <i class="fas fa-palette fa-4x text-info mb-3"></i>
+                        <h5>CSS3</h5>
+                        <p class="text-muted">Modern styling</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <i class="fas fa-cube fa-4x text-success mb-3"></i>
+                        <h5>Web3</h5>
+                        <p class="text-muted">Blockchain integration</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Components Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h3 class="fw-bold mb-4">Core Components</h3>
+                    <p class="lead mb-4">
+                        Modular React components for different aspects of the swap interface.
+                    </p>
+                    
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title"><i class="fas fa-wallet text-primary me-2"></i>WalletConnect</h6>
+                                    <p class="card-text small">Handles wallet connections for both Ethereum and ICP</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title"><i class="fas fa-exchange-alt text-success me-2"></i>ExchangeButton</h6>
+                                    <p class="card-text small">Main swap execution component</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title"><i class="fas fa-calculator text-info me-2"></i>AmountInput</h6>
+                                    <p class="card-text small">Input component for swap amounts</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title"><i class="fas fa-coins text-warning me-2"></i>CurrencySelector</h6>
+                                    <p class="card-text small">Currency selection dropdown</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title"><i class="fas fa-chart-line text-danger me-2"></i>ExchangeRate</h6>
+                                    <p class="card-text small">Real-time exchange rate display</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title"><i class="fas fa-info-circle text-secondary me-2"></i>NetworkInfo</h6>
+                                    <p class="card-text small">Network status and information</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5 class="fw-bold mt-4">Custom Hooks</h5>
+                    <div class="code-block">
+                        <pre><code class="language-typescript">// useExchange.ts - Main swap logic
+export const useExchange = () => {
+  const [swapState, setSwapState] = useState<SwapState>();
+  const [loading, setLoading] = useState(false);
+  
+  const createSwap = async (params: SwapParams) => {
+    // Swap creation logic
+  };
+  
+  return { swapState, loading, createSwap };
+};
+
+// useMetaMask.ts - Ethereum wallet integration
+export const useMetaMask = () => {
+  const [account, setAccount] = useState<string>();
+  const [chainId, setChainId] = useState<number>();
+  
+  const connect = async () => {
+    // MetaMask connection logic
+  };
+  
+  return { account, chainId, connect };
+};</code></pre>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Key Features</h5>
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <i class="fas fa-check text-success me-2"></i>
+                                    MetaMask integration
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-check text-success me-2"></i>
+                                    Internet Identity support
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-check text-success me-2"></i>
+                                    Real-time rate updates
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-check text-success me-2"></i>
+                                    Transaction tracking
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-check text-success me-2"></i>
+                                    Error handling
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-check text-success me-2"></i>
+                                    Mobile responsive
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Setup Section -->
+    <section class="py-5 bg-light" id="setup">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-12">
+                    <h2 class="display-6 fw-bold">Setup Guide</h2>
+                    <p class="lead text-muted">Get the frontend running in minutes</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Prerequisites</h5>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success me-2"></i>Node.js 16+ and npm</li>
+                                <li><i class="fas fa-check text-success me-2"></i>MetaMask browser extension</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Internet Identity (for ICP)</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Ethereum testnet access</li>
+                            </ul>
+                            
+                            <h5 class="card-title mt-4">Installation</h5>
+                            <div class="bg-dark text-light p-3 rounded">
+                                <code>
+                                    cd frontend<br>
+                                    npm install<br>
+                                    cp env.example .env<br>
+                                    # Configure environment variables
+                                </code>
+                            </div>
+                            
+                            <h5 class="card-title mt-4">Development</h5>
+                            <div class="bg-dark text-light p-3 rounded">
+                                <code>
+                                    npm start<br>
+                                    # Start development server<br>
+                                    npm run build<br>
+                                    # Build for production
+                                </code>
+                            </div>
+                            
+                            <h5 class="card-title mt-4">Deployment</h5>
+                            <div class="bg-dark text-light p-3 rounded">
+                                <code>
+                                    npm run build<br>
+                                    dfx deploy<br>
+                                    # Deploy to Internet Computer<br>
+                                    npm run deploy:ic<br>
+                                    # Deploy to IC mainnet
+                                </code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Usage Examples -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-12">
+                    <h2 class="display-6 fw-bold">Usage Examples</h2>
+                    <p class="lead text-muted">Common frontend integration patterns</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Wallet Connection</h5>
+                            <div class="code-block">
+                                <pre><code class="language-typescript">import { useMetaMask } from './hooks/useMetaMask';
+import { useInternetIdentity } from './hooks/useInternetIdentity';
+
+const App = () => {
+  const { account, connect: connectEth } = useMetaMask();
+  const { identity, login: loginICP } = useInternetIdentity();
+  
+  return (
+    <div>
+      <button onClick={connectEth}>Connect MetaMask</button>
+      <button onClick={loginICP}>Connect Internet Identity</button>
+    </div>
+  );
+};</code></pre>
+                            </div>
+                            
+                            <h5 class="card-title mt-4">Swap Creation</h5>
+                            <div class="code-block">
+                                <pre><code class="language-typescript">import { useExchange } from './hooks/useExchange';
+
+const SwapComponent = () => {
+  const { createSwap, loading, swapState } = useExchange();
+  
+  const handleSwap = async () => {
+    await createSwap({
+      fromCurrency: 'ETH',
+      toCurrency: 'ICP',
+      amount: '1.0',
+      recipient: 'user-address'
+    });
+  };
+  
+  return (
+    <button onClick={handleSwap} disabled={loading}>
+      {loading ? 'Processing...' : 'Create Swap'}
+    </button>
+  );
+};</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Web Frontend</h5>
+                    <p class="text-muted">React-based user interface for atomic swaps</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="index.html" class="text-light me-3">
+                        <i class="fas fa-home fa-2x"></i>
+                    </a>
+                    <a href="https://github.com/your-repo" class="text-light me-3">
+                        <i class="fab fa-github fa-2x"></i>
+                    </a>
+                    <a href="resolver.html" class="text-light">
+                        <i class="fas fa-arrow-right fa-2x"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</body>
+</html> 

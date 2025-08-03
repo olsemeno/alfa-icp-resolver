@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICP Canisters - Alfa ICP Resolver</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet">
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 80px 0;
+        }
+        .code-block {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .canister-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .canister-card:hover {
+            transform: translateY(-3px);
+        }
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .rust-code {
+            background-color: #2d3748;
+            color: #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-link me-2"></i>Alfa ICP Resolver
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Overview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ethereum.html">Ethereum</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="icp.html">ICP</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="frontend.html">Frontend</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="resolver.html">Resolver</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold mb-4">
+                <i class="fas fa-server me-3"></i>ICP Canisters
+            </h1>
+            <p class="lead mb-4">
+                Rust-based canisters for Internet Computer Protocol with ICRC-1 token integration
+            </p>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="#canisters" class="btn btn-light btn-lg">
+                            <i class="fas fa-cube me-2"></i>View Canisters
+                        </a>
+                        <a href="#deployment" class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-rocket me-2"></i>Deploy
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Canisters Overview -->
+    <section class="py-5" id="canisters">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-12">
+                    <h2 class="display-5 fw-bold">ICP Canisters</h2>
+                    <p class="lead text-muted">Rust-based canisters for Internet Computer integration</p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-8 mx-auto">
+                    <div class="card canister-card">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="feature-icon bg-success text-white">
+                                    <i class="fas fa-lock fa-2x"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h4 class="mb-0">Hash Time Lock Canister</h4>
+                                    <small class="text-muted">Core atomic swap canister</small>
+                                </div>
+                            </div>
+                            <p class="card-text">
+                                The main canister implementing hash time lock functionality for secure cross-chain swaps on the Internet Computer. 
+                                Provides ICRC-1 token integration and comprehensive swap management capabilities.
+                            </p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6 class="fw-bold">Core Features</h6>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-check text-success me-2"></i>Hash time lock creation</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Preimage verification</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>ICRC-1 token transfers</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Time-based expiration</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6 class="fw-bold">Security</h6>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-shield-alt text-primary me-2"></i>SHA-256 hashing</li>
+                                        <li><i class="fas fa-clock text-warning me-2"></i>Timelock validation</li>
+                                        <li><i class="fas fa-user-check text-info me-2"></i>Principal verification</li>
+                                        <li><i class="fas fa-ban text-danger me-2"></i>Double-spending prevention</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Canister Details -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h3 class="fw-bold mb-4">Hash Time Lock Canister</h3>
+                    <p class="lead mb-4">
+                        Rust-based canister implementing atomic swap functionality with ICRC-1 token support.
+                    </p>
+                    
+                    <h5 class="fw-bold mt-4">Key Functions</h5>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title"><i class="fas fa-plus text-primary me-2"></i>new_contract</h6>
+                                    <p class="card-text small">Creates a new hash time lock contract</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title"><i class="fas fa-unlock text-success me-2"></i>claim</h6>
+                                    <p class="card-text small">Claims funds using preimage</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title"><i class="fas fa-undo text-warning me-2"></i>refund</h6>
+                                    <p class="card-text small">Refunds after timelock expiration</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title"><i class="fas fa-search text-info me-2"></i>get_contract</h6>
+                                    <p class="card-text small">Retrieves contract details</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5 class="fw-bold mt-4">Data Structures</h5>
+                    <div class="code-block">
+                        <pre><code class="language-rust">#[derive(CandidType, Deserialize, Clone, Debug, Serialize)]
+pub struct TimeLockContract {
+    pub sender: String,
+    pub receiver: String,
+    pub amount: u64,
+    pub hashlock: String,
+    pub timelock: u64,
+    pub preimage: Option<String>,
+    pub withdrawn: bool,
+    pub refunded: bool,
+    pub ledger_id: String,
+}</code></pre>
+                    </div>
+
+                    <h5 class="fw-bold mt-4">Transfer Service</h5>
+                    <div class="code-block">
+                        <pre><code class="language-rust">pub async fn transfer_icrc1(
+    icrc1_canister: Principal, 
+    amount: u64, 
+    to_owner: Principal, 
+    subaccount: Option<Subaccount>
+) -> CallResult<(TransferResult, )> {
+    // ICRC-1 token transfer implementation
+}</code></pre>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">ICRC-1 Integration</h5>
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <i class="fas fa-coins text-success me-2"></i>
+                                    Native ICP token support
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-exchange-alt text-primary me-2"></i>
+                                    Cross-canister calls
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-shield-alt text-info me-2"></i>
+                                    Principal-based security
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-clock text-warning me-2"></i>
+                                    Time-based operations
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Query Functions</h5>
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <i class="fas fa-list text-primary me-2"></i>
+                                    get_all_contracts()
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-user text-success me-2"></i>
+                                    get_contracts_by_sender()
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-user-check text-info me-2"></i>
+                                    get_contracts_by_receiver()
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-clock text-warning me-2"></i>
+                                    get_expired_contracts()
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Deployment Section -->
+    <section class="py-5" id="deployment">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-12">
+                    <h2 class="display-6 fw-bold">Deployment Guide</h2>
+                    <p class="lead text-muted">Deploy canisters to Internet Computer</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Prerequisites</h5>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success me-2"></i>Rust and Cargo installed</li>
+                                <li><i class="fas fa-check text-success me-2"></i>DFX (Internet Computer SDK)</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Node.js and npm</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Internet Computer network access</li>
+                            </ul>
+                            
+                            <h5 class="card-title mt-4">Installation</h5>
+                            <div class="bg-dark text-light p-3 rounded">
+                                <code>
+                                    cd icp-canisters<br>
+                                    npm install<br>
+                                    dfx start --background<br>
+                                    # Start local IC network
+                                </code>
+                            </div>
+                            
+                            <h5 class="card-title mt-4">Build</h5>
+                            <div class="bg-dark text-light p-3 rounded">
+                                <code>
+                                    dfx build<br>
+                                    # Build canisters<br>
+                                    dfx build hashed-time-lock<br>
+                                    # Build specific canister
+                                </code>
+                            </div>
+                            
+                            <h5 class="card-title mt-4">Deploy</h5>
+                            <div class="bg-dark text-light p-3 rounded">
+                                <code>
+                                    dfx deploy<br>
+                                    # Deploy all canisters<br>
+                                    dfx deploy hashed-time-lock<br>
+                                    # Deploy specific canister<br>
+                                    dfx deploy --network ic<br>
+                                    # Deploy to mainnet
+                                </code>
+                            </div>
+                            
+                            <h5 class="card-title mt-4">Testing</h5>
+                            <div class="bg-dark text-light p-3 rounded">
+                                <code>
+                                    cd tests<br>
+                                    npm test<br>
+                                    # Run all tests<br>
+                                    npm run test:watch<br>
+                                    # Run in watch mode
+                                </code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testing Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h3 class="fw-bold mb-4">Testing</h3>
+                    <p class="lead mb-4">
+                        Comprehensive test suite covering canister functionality and integration.
+                    </p>
+                    
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title">Ledger Integration</h6>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-check text-success me-2"></i>ICP ledger deployment</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Token minting</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Balance verification</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Transfer testing</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title">Canister Functions</h6>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-check text-success me-2"></i>Contract creation</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Preimage verification</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Swap lifecycle</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Error handling</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- API Reference -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-12">
+                    <h2 class="display-6 fw-bold">API Reference</h2>
+                    <p class="lead text-muted">Complete canister interface documentation</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Update Methods (State-Changing)</h5>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Method</th>
+                                            <th>Description</th>
+                                            <th>Parameters</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><code>new_contract</code></td>
+                                            <td>Create hash time lock contract</td>
+                                            <td><code>NewContractRequest</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>claim</code></td>
+                                            <td>Claim funds with preimage</td>
+                                            <td><code>ClaimRequest</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>refund</code></td>
+                                            <td>Refund after expiration</td>
+                                            <td><code>RefundRequest</code></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <h5 class="card-title mt-4">Query Methods (Read-Only)</h5>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Method</th>
+                                            <th>Description</th>
+                                            <th>Return Type</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><code>get_contract</code></td>
+                                            <td>Get specific contract</td>
+                                            <td><code>Option&lt;TimeLockContract&gt;</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>get_all_contracts</code></td>
+                                            <td>Get all contracts</td>
+                                            <td><code>Vec&lt;(String, TimeLockContract)&gt;</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>hash_preimage</code></td>
+                                            <td>Hash a preimage</td>
+                                            <td><code>String</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>get_version</code></td>
+                                            <td>Get canister version</td>
+                                            <td><code>String</code></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>ICP Canisters</h5>
+                    <p class="text-muted">Rust canisters for Internet Computer integration</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="index.html" class="text-light me-3">
+                        <i class="fas fa-home fa-2x"></i>
+                    </a>
+                    <a href="https://github.com/your-repo" class="text-light me-3">
+                        <i class="fab fa-github fa-2x"></i>
+                    </a>
+                    <a href="frontend.html" class="text-light">
+                        <i class="fas fa-arrow-right fa-2x"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</body>
+</html> 

@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethereum Contracts - Alfa ICP Resolver</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet">
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            color: white;
+            padding: 80px 0;
+        }
+        .code-block {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .contract-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .contract-card:hover {
+            transform: translateY(-3px);
+        }
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-link me-2"></i>Alfa ICP Resolver
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Overview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="ethereum.html">Ethereum</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="icp.html">ICP</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="frontend.html">Frontend</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="resolver.html">Resolver</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold mb-4">
+                <i class="fab fa-ethereum me-3"></i>Ethereum Smart Contracts
+            </h1>
+            <p class="lead mb-4">
+                Secure hash time lock contracts and liquidity management for cross-chain atomic swaps
+            </p>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="#contracts" class="btn btn-light btn-lg">
+                            <i class="fas fa-file-contract me-2"></i>View Contracts
+                        </a>
+                        <a href="#deployment" class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-rocket me-2"></i>Deploy
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contracts Overview -->
+    <section class="py-5" id="contracts">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-12">
+                    <h2 class="display-5 fw-bold">Smart Contracts</h2>
+                    <p class="lead text-muted">Core contracts for Ethereum-side atomic swap functionality</p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="card contract-card h-100">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="feature-icon bg-primary text-white">
+                                    <i class="fas fa-lock fa-2x"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h4 class="mb-0">HashedTimelock</h4>
+                                    <small class="text-muted">Core atomic swap contract</small>
+                                </div>
+                            </div>
+                            <p class="card-text">
+                                The main contract implementing hash time lock functionality for secure cross-chain swaps. 
+                                Manages the creation, claiming, and refunding of atomic swaps using cryptographic hashes.
+                            </p>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success me-2"></i>Hash time lock creation</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Preimage verification</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Automatic refund mechanism</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Event emission for tracking</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card contract-card h-100">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="feature-icon bg-success text-white">
+                                    <i class="fas fa-vault fa-2x"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h4 class="mb-0">LiquidityVault</h4>
+                                    <small class="text-muted">Liquidity management contract</small>
+                                </div>
+                            </div>
+                            <p class="card-text">
+                                Manages liquidity pools and provides funding for atomic swaps. Handles token deposits, 
+                                withdrawals, and ensures sufficient liquidity for cross-chain operations.
+                            </p>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success me-2"></i>Liquidity pool management</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Token deposit/withdrawal</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Balance tracking</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Access control</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contract Details -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h3 class="fw-bold mb-4">HashedTimelock Contract</h3>
+                    <p class="lead mb-4">
+                        The core contract that implements atomic swap functionality using hash time locks.
+                    </p>
+                    
+                    <h5 class="fw-bold mt-4">Key Functions</h5>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title"><i class="fas fa-plus text-primary me-2"></i>newContract</h6>
+                                    <p class="card-text small">Creates a new hash time lock contract</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title"><i class="fas fa-unlock text-success me-2"></i>claim</h6>
+                                    <p class="card-text small">Claims funds using preimage</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title"><i class="fas fa-undo text-warning me-2"></i>refund</h6>
+                                    <p class="card-text small">Refunds after timelock expiration</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title"><i class="fas fa-search text-info me-2"></i>getContract</h6>
+                                    <p class="card-text small">Retrieves contract details</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5 class="fw-bold mt-4">Contract Structure</h5>
+                    <div class="code-block">
+                        <pre><code class="language-solidity">struct TimeLockContract {
+    address sender;
+    address receiver;
+    uint256 amount;
+    bytes32 hashlock;
+    uint256 timelock;
+    bool withdrawn;
+    bool refunded;
+    bytes32 preimage;
+}</code></pre>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Security Features</h5>
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <i class="fas fa-shield-alt text-success me-2"></i>
+                                    Cryptographic hash verification
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-clock text-warning me-2"></i>
+                                    Time-based expiration
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-user-check text-info me-2"></i>
+                                    Access control validation
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-ban text-danger me-2"></i>
+                                    Double-spending prevention
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Deployment Section -->
+    <section class="py-5" id="deployment">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-12">
+                    <h2 class="display-6 fw-bold">Deployment Guide</h2>
+                    <p class="lead text-muted">Deploy contracts to Ethereum networks</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Prerequisites</h5>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success me-2"></i>Node.js and npm installed</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Hardhat development environment</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Ethereum wallet with test ETH</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Environment variables configured</li>
+                            </ul>
+                            
+                            <h5 class="card-title mt-4">Installation</h5>
+                            <div class="bg-dark text-light p-3 rounded">
+                                <code>
+                                    cd ethereum-contracts<br>
+                                    npm install<br>
+                                    cp .env.example .env<br>
+                                    # Configure your .env file
+                                </code>
+                            </div>
+                            
+                            <h5 class="card-title mt-4">Compilation</h5>
+                            <div class="bg-dark text-light p-3 rounded">
+                                <code>
+                                    npx hardhat compile<br>
+                                    # Contracts compiled to artifacts/
+                                </code>
+                            </div>
+                            
+                            <h5 class="card-title mt-4">Testing</h5>
+                            <div class="bg-dark text-light p-3 rounded">
+                                <code>
+                                    npx hardhat test<br>
+                                    # Run all tests<br>
+                                    npx hardhat test --grep "HashedTimelock"<br>
+                                    # Run specific test suite
+                                </code>
+                            </div>
+                            
+                            <h5 class="card-title mt-4">Deployment</h5>
+                            <div class="bg-dark text-light p-3 rounded">
+                                <code>
+                                    npx hardhat run scripts/deploy.js --network localhost<br>
+                                    # Deploy to local network<br>
+                                    npx hardhat run scripts/deploy.js --network sepolia<br>
+                                    # Deploy to testnet
+                                </code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testing Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h3 class="fw-bold mb-4">Testing</h3>
+                    <p class="lead mb-4">
+                        Comprehensive test suite covering all contract functionality and edge cases.
+                    </p>
+                    
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title">Unit Tests</h6>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-check text-success me-2"></i>Contract creation</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Preimage verification</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Time-based operations</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Access control</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title">Integration Tests</h6>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-check text-success me-2"></i>Cross-contract interaction</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Event emission</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Gas optimization</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Error handling</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Ethereum Contracts</h5>
+                    <p class="text-muted">Smart contracts for cross-chain atomic swaps</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="index.html" class="text-light me-3">
+                        <i class="fas fa-home fa-2x"></i>
+                    </a>
+                    <a href="https://github.com/your-repo" class="text-light me-3">
+                        <i class="fab fa-github fa-2x"></i>
+                    </a>
+                    <a href="icp.html" class="text-light">
+                        <i class="fas fa-arrow-right fa-2x"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</body>
+</html> 
