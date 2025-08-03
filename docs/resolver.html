@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cross-Chain Resolver - Alfa ICP Resolver</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet">
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            padding: 80px 0;
+        }
+        .code-block {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .service-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .service-card:hover {
+            transform: translateY(-3px);
+        }
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .architecture-section {
+            background-color: #f8f9fa;
+            padding: 60px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-link me-2"></i>Alfa ICP Resolver
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Overview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ethereum.html">Ethereum</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="icp.html">ICP</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="frontend.html">Frontend</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="resolver.html">Resolver</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold mb-4">
+                <i class="fas fa-network-wired me-3"></i>Cross-Chain Resolver
+            </h1>
+            <p class="lead mb-4">
+                TypeScript service for coordinating atomic swaps between Ethereum and Internet Computer
+            </p>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="#services" class="btn btn-light btn-lg">
+                            <i class="fas fa-cogs me-2"></i>View Services
+                        </a>
+                        <a href="#setup" class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-rocket me-2"></i>Deploy
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Overview -->
+    <section class="py-5" id="services">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-12">
+                    <h2 class="display-5 fw-bold">Resolver Services</h2>
+                    <p class="lead text-muted">Core services for cross-chain coordination and swap management</p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="card service-card h-100">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="feature-icon bg-warning text-white">
+                                    <i class="fas fa-exchange-alt fa-2x"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h4 class="mb-0">Swap Coordinator</h4>
+                                    <small class="text-muted">Main swap orchestration service</small>
+                                </div>
+                            </div>
+                            <p class="card-text">
+                                Coordinates the entire atomic swap process between Ethereum and ICP chains. 
+                                Manages swap state, validates transactions, and ensures atomicity.
+                            </p>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success me-2"></i>Swap state management</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Cross-chain validation</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Transaction monitoring</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Error recovery</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card service-card h-100">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="feature-icon bg-info text-white">
+                                    <i class="fas fa-broadcast-tower fa-2x"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h4 class="mb-0">WebSocket Server</h4>
+                                    <small class="text-muted">Real-time communication service</small>
+                                </div>
+                            </div>
+                            <p class="card-text">
+                                Provides real-time updates to frontend applications about swap status, 
+                                transaction confirmations, and network events.
+                            </p>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success me-2"></i>Real-time updates</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Event broadcasting</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Connection management</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Error handling</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture Section -->
+    <section class="architecture-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h3 class="fw-bold mb-4">Service Architecture</h3>
+                    <p class="lead mb-4">
+                        The resolver implements a microservices architecture for scalable cross-chain operations.
+                    </p>
+                    
+                    <h5 class="fw-bold mt-4">Core Components</h5>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title"><i class="fas fa-handshake text-primary me-2"></i>Handler</h6>
+                                    <p class="card-text small">Main request handler and routing</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title"><i class="fas fa-cogs text-success me-2"></i>Resolver</h6>
+                                    <p class="card-text small">Core swap resolution logic</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title"><i class="fas fa-truck text-info me-2"></i>Relayer</h6>
+                                    <p class="card-text small">Transaction relaying service</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title"><i class="fas fa-exchange-alt text-warning me-2"></i>Swap</h6>
+                                    <p class="card-text small">Swap execution service</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5 class="fw-bold mt-4">Service Integration</h5>
+                    <div class="code-block">
+                        <pre><code class="language-typescript">// Main resolver service
+export class CrossChainResolver {
+  private ethereumService: ETHLiquidityService;
+  private icpService: ICPLiquidityService;
+  private webSocketServer: WebSocketServer;
+  
+  async createSwap(params: SwapParams): Promise<SwapResult> {
+    // Validate parameters
+    // Create swap on both chains
+    // Monitor for completion
+    // Return result
+  }
+  
+  async monitorSwap(swapId: string): Promise<SwapStatus> {
+    // Check status on both chains
+    // Update WebSocket clients
+    // Return current status
+  }
+}</code></pre>
+                    </div>
+
+                    <h5 class="fw-bold mt-4">WebSocket Communication</h5>
+                    <div class="code-block">
+                        <pre><code class="language-typescript">// WebSocket server for real-time updates
+export class FusionWebSocket {
+  private wss: WebSocketServer;
+  private clients: Set<WebSocket> = new Set();
+  
+  broadcast(event: string, data: any) {
+    this.clients.forEach(client => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(JSON.stringify({ event, data }));
+      }
+    });
+  }
+  
+  handleSwapUpdate(swapId: string, status: SwapStatus) {
+    this.broadcast('swap_update', { swapId, status });
+  }
+}</code></pre>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Service Features</h5>
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <i class="fas fa-shield-alt text-success me-2"></i>
+                                    Cross-chain validation
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-clock text-warning me-2"></i>
+                                    Real-time monitoring
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-sync text-info me-2"></i>
+                                    Automatic retry logic
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-exclamation-triangle text-danger me-2"></i>
+                                    Error recovery
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Integration Points</h5>
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <i class="fab fa-ethereum text-primary me-2"></i>
+                                    Ethereum RPC
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-server text-success me-2"></i>
+                                    ICP Canister calls
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-desktop text-info me-2"></i>
+                                    Frontend WebSocket
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-database text-warning me-2"></i>
+                                    State persistence
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Setup Section -->
+    <section class="py-5" id="setup">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-12">
+                    <h2 class="display-6 fw-bold">Setup Guide</h2>
+                    <p class="lead text-muted">Deploy the cross-chain resolver service</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Prerequisites</h5>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success me-2"></i>Node.js 16+ and npm</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Ethereum node access</li>
+                                <li><i class="fas fa-check text-success me-2"></i>ICP network access</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Environment configuration</li>
+                            </ul>
+                            
+                            <h5 class="card-title mt-4">Installation</h5>
+                            <div class="bg-dark text-light p-3 rounded">
+                                <code>
+                                    cd crosschain-resolver<br>
+                                    npm install<br>
+                                    cp .env.example .env<br>
+                                    # Configure environment variables
+                                </code>
+                            </div>
+                            
+                            <h5 class="card-title mt-4">Configuration</h5>
+                            <div class="bg-dark text-light p-3 rounded">
+                                <code>
+                                    # Ethereum configuration<br>
+                                    ETHEREUM_RPC_URL=https://eth-mainnet.alchemyapi.io/v2/YOUR_KEY<br>
+                                    ETHEREUM_PRIVATE_KEY=your_private_key<br>
+                                    <br>
+                                    # ICP configuration<br>
+                                    ICP_CANISTER_ID=your_canister_id<br>
+                                    ICP_NETWORK=ic<br>
+                                    <br>
+                                    # WebSocket configuration<br>
+                                    WS_PORT=8080<br>
+                                    WS_HOST=localhost
+                                </code>
+                            </div>
+                            
+                            <h5 class="card-title mt-4">Development</h5>
+                            <div class="bg-dark text-light p-3 rounded">
+                                <code>
+                                    npm run dev<br>
+                                    # Start development server<br>
+                                    npm run build<br>
+                                    # Build for production<br>
+                                    npm start<br>
+                                    # Start production server
+                                </code>
+                            </div>
+                            
+                            <h5 class="card-title mt-4">Testing</h5>
+                            <div class="bg-dark text-light p-3 rounded">
+                                <code>
+                                    npm test<br>
+                                    # Run all tests<br>
+                                    npm run test:watch<br>
+                                    # Run in watch mode<br>
+                                    npm run test:coverage<br>
+                                    # Run with coverage
+                                </code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- API Reference -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-12">
+                    <h2 class="display-6 fw-bold">API Reference</h2>
+                    <p class="lead text-muted">Complete service API documentation</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">REST API Endpoints</h5>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Method</th>
+                                            <th>Endpoint</th>
+                                            <th>Description</th>
+                                            <th>Parameters</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><code>POST</code></td>
+                                            <td><code>/api/swap/create</code></td>
+                                            <td>Create new atomic swap</td>
+                                            <td><code>SwapParams</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>GET</code></td>
+                                            <td><code>/api/swap/:id</code></td>
+                                            <td>Get swap status</td>
+                                            <td><code>swapId</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>POST</code></td>
+                                            <td><code>/api/swap/:id/claim</code></td>
+                                            <td>Claim swap with preimage</td>
+                                            <td><code>ClaimParams</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>POST</code></td>
+                                            <td><code>/api/swap/:id/refund</code></td>
+                                            <td>Refund expired swap</td>
+                                            <td><code>RefundParams</code></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <h5 class="card-title mt-4">WebSocket Events</h5>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Event</th>
+                                            <th>Description</th>
+                                            <th>Data Format</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><code>swap_created</code></td>
+                                            <td>New swap created</td>
+                                            <td><code>{ swapId, status }</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>swap_updated</code></td>
+                                            <td>Swap status updated</td>
+                                            <td><code>{ swapId, status, details }</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>swap_completed</code></td>
+                                            <td>Swap successfully completed</td>
+                                            <td><code>{ swapId, result }</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>swap_failed</code></td>
+                                            <td>Swap failed or expired</td>
+                                            <td><code>{ swapId, error }</code></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Usage Examples -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-12">
+                    <h2 class="display-6 fw-bold">Usage Examples</h2>
+                    <p class="lead text-muted">Common integration patterns</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Creating a Swap</h5>
+                            <div class="code-block">
+                                <pre><code class="language-typescript">// Create atomic swap
+const swapParams = {
+  fromChain: 'ethereum',
+  toChain: 'icp',
+  fromToken: 'ETH',
+  toToken: 'ICP',
+  amount: '1.0',
+  recipient: 'user-address',
+  timelock: Date.now() + 3600000 // 1 hour
+};
+
+const response = await fetch('/api/swap/create', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(swapParams)
+});
+
+const result = await response.json();
+console.log('Swap created:', result.swapId);</code></pre>
+                            </div>
+                            
+                            <h5 class="card-title mt-4">WebSocket Connection</h5>
+                            <div class="code-block">
+                                <pre><code class="language-typescript">// Connect to WebSocket for real-time updates
+const ws = new WebSocket('ws://localhost:8080');
+
+ws.onopen = () => {
+  console.log('Connected to resolver');
+};
+
+ws.onmessage = (event) => {
+  const { event: eventType, data } = JSON.parse(event.data);
+  
+  switch (eventType) {
+    case 'swap_updated':
+      console.log('Swap updated:', data);
+      break;
+    case 'swap_completed':
+      console.log('Swap completed:', data);
+      break;
+  }
+};</code></pre>
+                            </div>
+                            
+                            <h5 class="card-title mt-4">Monitoring Swap Status</h5>
+                            <div class="code-block">
+                                <pre><code class="language-typescript">// Monitor swap status
+const checkSwapStatus = async (swapId: string) => {
+  const response = await fetch(`/api/swap/${swapId}`);
+  const status = await response.json();
+  
+  console.log('Swap status:', status);
+  
+  if (status.state === 'pending') {
+    // Continue monitoring
+    setTimeout(() => checkSwapStatus(swapId), 5000);
+  }
+};</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Cross-Chain Resolver</h5>
+                    <p class="text-muted">TypeScript service for cross-chain coordination</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="index.html" class="text-light me-3">
+                        <i class="fas fa-home fa-2x"></i>
+                    </a>
+                    <a href="https://github.com/your-repo" class="text-light me-3">
+                        <i class="fab fa-github fa-2x"></i>
+                    </a>
+                    <a href="index.html" class="text-light">
+                        <i class="fas fa-arrow-left fa-2x"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</body>
+</html> 

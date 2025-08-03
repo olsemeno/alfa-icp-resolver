@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alfa ICP Resolver - Cross-Chain Atomic Swaps</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 100px 0;
+        }
+        .feature-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        .tech-stack {
+            background-color: #f8f9fa;
+            padding: 80px 0;
+        }
+        .architecture-diagram {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .nav-pills .nav-link {
+            border-radius: 25px;
+            margin: 5px;
+        }
+        .nav-pills .nav-link.active {
+            background-color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-link me-2"></i>Alfa ICP Resolver
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Overview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ethereum.html">Ethereum</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="icp.html">ICP</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="frontend.html">Frontend</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="resolver.html">Resolver</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container text-center">
+            <h1 class="display-3 fw-bold mb-4">
+                <i class="fas fa-bridge me-3"></i>Cross-Chain Atomic Swaps
+            </h1>
+            <p class="lead mb-5">
+                Secure, decentralized atomic swaps between Ethereum and Internet Computer Protocol (ICP)
+            </p>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="https://github.com/your-repo" class="btn btn-light btn-lg">
+                            <i class="fab fa-github me-2"></i>View on GitHub
+                        </a>
+                        <a href="#getting-started" class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-rocket me-2"></i>Get Started
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-12">
+                    <h2 class="display-5 fw-bold">Key Features</h2>
+                    <p class="lead text-muted">Advanced cross-chain functionality for secure token exchanges</p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center p-4">
+                            <div class="mb-3">
+                                <i class="fas fa-shield-alt fa-3x text-primary"></i>
+                            </div>
+                            <h5 class="card-title">Secure Atomic Swaps</h5>
+                            <p class="card-text">
+                                Cryptographic hash time locks ensure secure cross-chain token exchanges without trusted intermediaries.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center p-4">
+                            <div class="mb-3">
+                                <i class="fas fa-clock fa-3x text-success"></i>
+                            </div>
+                            <h5 class="card-title">Time-Based Expiration</h5>
+                            <p class="card-text">
+                                Automatic refund mechanisms with configurable timeouts prevent stuck transactions.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center p-4">
+                            <div class="mb-3">
+                                <i class="fas fa-network-wired fa-3x text-info"></i>
+                            </div>
+                            <h5 class="card-title">Multi-Chain Support</h5>
+                            <p class="card-text">
+                                Native support for Ethereum and Internet Computer with extensible architecture.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture Section -->
+    <section class="tech-stack">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h2 class="display-6 fw-bold mb-4">System Architecture</h2>
+                    <p class="lead mb-4">
+                        The Alfa ICP Resolver implements a sophisticated cross-chain architecture with multiple components working together to enable secure atomic swaps.
+                    </p>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-ethereum text-primary me-3 fa-2x"></i>
+                                <div>
+                                    <h6 class="mb-0">Ethereum Contracts</h6>
+                                    <small class="text-muted">Solidity smart contracts</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-server text-success me-3 fa-2x"></i>
+                                <div>
+                                    <h6 class="mb-0">ICP Canisters</h6>
+                                    <small class="text-muted">Rust canisters</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-code text-info me-3 fa-2x"></i>
+                                <div>
+                                    <h6 class="mb-0">Cross-Chain Resolver</h6>
+                                    <small class="text-muted">TypeScript service</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-desktop text-warning me-3 fa-2x"></i>
+                                <div>
+                                    <h6 class="mb-0">Web Frontend</h6>
+                                    <small class="text-muted">React application</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Component Overview</h5>
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    <strong>Ethereum:</strong> HashedTimelock and LiquidityVault contracts
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    <strong>ICP:</strong> Hash time lock canister with ICRC-1 integration
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    <strong>Resolver:</strong> Cross-chain coordination service
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    <strong>Frontend:</strong> User interface for swap operations
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Start Section -->
+    <section class="py-5" id="getting-started">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-12">
+                    <h2 class="display-6 fw-bold">Quick Start</h2>
+                    <p class="lead text-muted">Get up and running in minutes</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 mx-auto">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Prerequisites</h5>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success me-2"></i>Node.js 16+ and npm</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Rust and Cargo</li>
+                                <li><i class="fas fa-check text-success me-2"></i>DFX (Internet Computer SDK)</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Hardhat (Ethereum development)</li>
+                            </ul>
+                            
+                            <h5 class="card-title mt-4">Installation</h5>
+                            <div class="bg-dark text-light p-3 rounded">
+                                <code>
+                                    git clone https://github.com/olsemeno/alfa-icp-resolver<br>
+                                    cd alfa-icp-resolver<br>
+                                    npm install<br>
+                                    dfx start --background<br>
+                                    npm run deploy:all
+                                </code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Documentation Links -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-12">
+                    <h2 class="display-6 fw-bold">Documentation</h2>
+                    <p class="lead text-muted">Explore each component in detail</p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="card text-center h-100">
+                        <div class="card-body">
+                            <i class="fas fa-ethereum fa-3x text-primary mb-3"></i>
+                            <h5 class="card-title">Ethereum Contracts</h5>
+                            <p class="card-text">Smart contracts for Ethereum side of atomic swaps</p>
+                            <a href="ethereum.html" class="btn btn-primary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-center h-100">
+                        <div class="card-body">
+                            <i class="fas fa-server fa-3x text-success mb-3"></i>
+                            <h5 class="card-title">ICP Canisters</h5>
+                            <p class="card-text">Rust canisters for Internet Computer integration</p>
+                            <a href="icp.html" class="btn btn-success">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-center h-100">
+                        <div class="card-body">
+                            <i class="fas fa-desktop fa-3x text-info mb-3"></i>
+                            <h5 class="card-title">Frontend</h5>
+                            <p class="card-text">React-based user interface for swap operations</p>
+                            <a href="frontend.html" class="btn btn-info">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-center h-100">
+                        <div class="card-body">
+                            <i class="fas fa-code fa-3x text-warning mb-3"></i>
+                            <h5 class="card-title">Cross-Chain Resolver</h5>
+                            <p class="card-text">TypeScript service for cross-chain coordination</p>
+                            <a href="resolver.html" class="btn btn-warning">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Alfa ICP Resolver</h5>
+                    <p class="text-muted">Secure cross-chain atomic swaps between Ethereum and Internet Computer</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="https://github.com/your-repo" class="text-light me-3">
+                        <i class="fab fa-github fa-2x"></i>
+                    </a>
+                    <a href="#" class="text-light me-3">
+                        <i class="fab fa-twitter fa-2x"></i>
+                    </a>
+                    <a href="#" class="text-light">
+                        <i class="fab fa-discord fa-2x"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 
