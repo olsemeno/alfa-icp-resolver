@@ -101,13 +101,12 @@ If tests fail:
 
 1. Check if DFX is running: `dfx ping`
 2. Check canister status: `dfx canister status hashed_time_lock`
-3. Check logs: `dfx canister call hashed_time_lock get_version`
 
 ## Adding New Tests
 
 1. Create a new `.test.ts` file in the `tests/` folder
 2. Import functions from `setup.ts`
-3. Use `runDfxCommand()` to call canisters
+3. Use `runDfxCommand()` or DFX. to call canisters
 4. Add descriptive test names
 
 ## Test File Structure

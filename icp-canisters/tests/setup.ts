@@ -1,6 +1,7 @@
-import { execSync } from 'child_process';
-import { existsSync } from 'fs';
-import { join } from 'path';
+import { execSync } from "child_process";
+import { existsSync } from "fs";
+import { join } from "path";
+import { DFX } from "./dfx.const";
 
 // Global variables for tests
 declare global {
@@ -12,15 +13,18 @@ declare global {
 
 // Setting global variables
 globalThis.__TEST_MODE__ = true;
-globalThis.__DFX_NETWORK__ = 'local';
+globalThis.__DFX_NETWORK__ = "local";
 
 // Function to run dfx command
 export function runDfxCommand(command: string): string {
   try {
-    return execSync(`dfx ${command}`, { 
-      encoding: 'utf8',
-      cwd: process.cwd()
+    console.log(`Running DFX command: dfx ${command}`);
+    const result = execSync(`dfx ${command}`, {
+      encoding: "utf8",
+      cwd: process.cwd(),
     });
+    console.log(`DFX command result: ${result}`);
+    return result;
   } catch (error) {
     console.error(`DFX command failed: ${command}`);
     throw error;
@@ -30,7 +34,7 @@ export function runDfxCommand(command: string): string {
 // Function to check if dfx is running
 export function isDfxRunning(): boolean {
   try {
-    execSync('dfx ping', { stdio: 'ignore' });
+    execSync("dfx ping", { stdio: "ignore" });
     return true;
   } catch {
     return false;
@@ -51,10 +55,11 @@ export function getCanisterId(canisterName: string): string {
 // Function to get ledger ID
 export function getLedgerId(): string {
   try {
-    const output = runDfxCommand('canister id ledger');
+    
+    const output = runDfxCommand("canister id ledger");
     return output.trim();
   } catch (error) {
-    console.error('Failed to get ledger ID');
+    console.error("Failed to get ledger ID");
     throw error;
   }
 }
@@ -62,11 +67,13 @@ export function getLedgerId(): string {
 // Function to deploy ledger
 export function deployLedger(): void {
   try {
-    console.log('Deploying ICP ledger...');
-    runDfxCommand('deploy ledger --argument \'(record { minting_account = "d46936bcaa8f3ffd87278bf2f4568d656a70e1713e2c705cc1ae9a9e387a6d49"; initial_values = vec {}; send_whitelist = vec {}; })\'');
-    console.log('ICP ledger deployed successfully');
+    console.log("Deploying ICP ledger...");
+    runDfxCommand(
+      "deploy ledger --argument '(record { minting_account = \"d46936bcaa8f3ffd87278bf2f4568d656a70e1713e2c705cc1ae9a9e387a6d49\"; initial_values = vec {}; send_whitelist = vec {}; })'"
+    );
+    console.log("ICP ledger deployed successfully");
   } catch (error) {
-    console.error('Failed to deploy ledger');
+    console.error("Failed to deploy ledger");
     throw error;
   }
 }
@@ -75,10 +82,12 @@ export function deployLedger(): void {
 export function mintICP(to: string, amount: string): void {
   try {
     console.log(`Minting ${amount} ICP to ${to}...`);
-    runDfxCommand(`canister call ledger mint '(record { to = "${to}"; amount = ${amount}; })'`);
-    console.log('ICP minted successfully');
+    runDfxCommand(
+      `canister call ledger mint '(record { to = "${to}"; amount = ${amount}; })'`
+    );
+    console.log("ICP minted successfully");
   } catch (error) {
-    console.error('Failed to mint ICP');
+    console.error("Failed to mint ICP");
     throw error;
   }
 }
@@ -86,11 +95,12 @@ export function mintICP(to: string, amount: string): void {
 // Function to get balance
 export function getBalance(account: string): string {
   try {
-    
-    const output = runDfxCommand(`canister call ledger icrc1_balance_of '(record { owner = principal "${account}"; })'`);
+    const output = runDfxCommand(
+      `canister call ledger icrc1_balance_of '(record { owner = principal "${account}"; })'`
+    );
     return output.trim();
   } catch (error) {
-    console.error('Failed to get balance');
+    console.error("Failed to get balance");
     throw error;
   }
 }
@@ -98,57 +108,49 @@ export function getBalance(account: string): string {
 // Function to deploy resolver
 export function deployResolver(): void {
   try {
-    console.log('Deploying resolver canister...');
-    runDfxCommand('deploy hashed_time_lock');
-    console.log('Resolver canister deployed successfully');
+    console.log("Deploying resolver canister...");
+    runDfxCommand("deploy hashed-time-lock");
+    console.log("Resolver canister deployed successfully");
   } catch (error) {
-    console.error('Failed to deploy resolver');
+    console.error("Failed to deploy resolver");
     throw error;
   }
 }
 
 // Initialization of test environment
 beforeAll(async () => {
-  console.log('Setting up test environment...');
-  const ledgerScriptPath = join(__dirname, 'ledger.sh');
+  console.log("Setting up test environment...");
+  const ledgerScriptPath = join(__dirname, "ledger.sh");
 
-  // Check if dfx is running
-  if (!isDfxRunning()) {
-    console.log('Starting dfx...');
-    runDfxCommand('start --background');
-    
-    // Wait for a while to start
-    await new Promise(resolve => setTimeout(resolve, 5000));
-  }
-  
+  console.log(DFX.START());
+
+  console.log("Starting ledger deployment...");
   // Deploy ledger
   if (!existsSync(ledgerScriptPath)) {
     throw new Error(`Ledger script not found at ${ledgerScriptPath}`);
   }
 
-  console.log('Starting ledger deployment...');
-  
+  console.log("Starting ledger deployment...");
+
   try {
     // Run ledger.sh script
     const result = execSync(`bash ${ledgerScriptPath}`, {
       cwd: process.cwd(),
-      encoding: 'utf8',
-      stdio: 'pipe'
+      encoding: "utf8",
+      stdio: "pipe",
     });
-    
-    console.log('Ledger deployment output:', result);
-    
-    
+
+    console.log("Ledger deployment output:", result);
   } catch (error) {
-    console.error('Ledger deployment failed:', error);
+    console.error("Ledger deployment failed:", error);
     throw error;
   }
-  
+
   // Deploy resolver
   deployResolver();
-  
+
   // Get canister ID
-  globalThis.__CANISTER_ID__ = getCanisterId('hashed_time_lock');
+  globalThis.__CANISTER_ID__ = getCanisterId("hashed-time-lock");
   globalThis.__LEDGER_ID__ = getLedgerId();
 
   console.log(`Canister ID: ${globalThis.__CANISTER_ID__}`);
@@ -157,6 +159,6 @@ beforeAll(async () => {
 
 // Cleanup after tests
 afterAll(async () => {
-  console.log('Cleaning up test environment...');
+  console.log("Cleaning up test environment...");
   // Add cleanup if needed
 });
