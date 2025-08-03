@@ -4,16 +4,14 @@ import { ethers } from 'ethers';
 import { HttpAgent, Actor } from "@dfinity/agent";
 import { Ed25519KeyIdentity } from "@dfinity/identity";
 
-import { HashedTimeLockService } from '../services/HashedTimeLockService';
+import { HashedTimeLockService } from '../services/HashedTimeLockICPService';
 import { ICRC1Service } from '../services/icrc1Service';
 import { isEthereumAvailable, decodeEvmError } from '../utils/ethereum';
 import { generateSecretAndHashlockEVM, generateSecretAndHashlockICP, generateTimelockEVM, generateTimelockICP } from '../utils/hashlock';
 
-import { idlFactory as hashTimeLockIdlFactory } from "../blockchain/interfaces/icp/hashedTimeLock.did.js";
-import type { _SERVICE as _HashedTimeLockService } from "../blockchain/interfaces/icp/hashedTimeLock.did";
-import resolverAddresses from '../blockchain/resolver-addresses.json';
-import HashedTimeLockABI from "../blockchain/interfaces/evm/hashedTimeLock.evm.abi.json";
-import deploymentAddresses from "../blockchain/deployment-addresses.json";
+import resolverAddresses from '../../../shared/blockchain/resolver-addresses.json';
+import HashedTimeLockABI from '../../../shared/blockchain/interfaces/evm/hashedTimeLock.evm.abi.json';
+import deploymentAddresses from '../../../shared/blockchain/deployment-addresses.json';
 
 const hashedTimeLockEvmAddress = deploymentAddresses.evm.localhost.HashedTimeLock;
 const hashedTimeLockIcpCanisterId = deploymentAddresses.icp.dev.HashedTimeLock;
