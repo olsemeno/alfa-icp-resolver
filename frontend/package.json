@@ -5,8 +5,8 @@
   "dependencies": {
     "@dfinity/agent": "^2.0.0",
     "@dfinity/auth-client": "^2.0.0",
-    "@dfinity/identity": "^2.0.0",
     "@dfinity/candid": "^2.0.0",
+    "@dfinity/identity": "^2.0.0",
     "@dfinity/ledger-icrc": "^2.9.1",
     "@dfinity/utils": "^2.0.0",
     "@types/node": "^16.18.68",

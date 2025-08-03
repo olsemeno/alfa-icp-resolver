@@ -28,7 +28,7 @@ npm install
 npx hardhat test
 
 # Run specific test file
-npx hardhat test test/HashedTimelock.test.ts
+npx hardhat test test/HashedTimeLock.test.ts
 
 # Run integration tests
 npx hardhat test test/integration/

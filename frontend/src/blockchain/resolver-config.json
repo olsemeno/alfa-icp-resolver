@@ -1,0 +1,13 @@
+{
+  "evm": {
+    "privateKey":{
+      "localhost": "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d",
+      "dev": "d8d7e468d9f0f9f597fd1bab5e38c1d2fe39601b7faa9b0faa28d49a0ab1a5e0"
+    }
+  },
+  "icp": {
+    "identity":{
+      "dev": "87654321876543218765432187654311"
+    }
+  }
+}

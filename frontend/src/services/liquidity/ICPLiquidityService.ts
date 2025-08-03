@@ -1,6 +1,6 @@
 import { ICRC1Service } from '../icrc1Service';
 import { HashedTimeLockService } from '../HashedTimeLockICPService';
-import { toE8s } from '../../utils/icp';
+import { toE8s, getIdentity } from '../../utils/icp';
 import deploymentAddresses from '../../blockchain/deployment-addresses.json';
 
 const hashedTimeLockIcpCanisterId = deploymentAddresses.icp.dev.HashedTimeLock;
@@ -8,7 +8,7 @@ const hashedTimeLockIcpCanisterId = deploymentAddresses.icp.dev.HashedTimeLock;
 /**
  * 🔒 Locks liquidity on ICP via HashedTimeLock canister
  */
-export async function lockLiquidityICP(
+async function lockLiquidityICP(
   identity: any,
   receiver: string,
   hashlock: string,
@@ -17,6 +17,9 @@ export async function lockLiquidityICP(
 ) {
   try {
     console.log('🔒 [ICP] Locking liquidity...');
+    console.log('🔄 [ICP] Identity:', identity.getPrincipal().toString());
+    console.log('🔄 [ICP] Amount:', amount);
+
     const icrc1Service = new ICRC1Service();
     const hashedTimeLockService = new HashedTimeLockService();
 
@@ -48,7 +51,7 @@ export async function lockLiquidityICP(
 /**
  * ✅ Claims locked liquidity by providing preimage (secret)
  */
-export async function claimLiquidityICP(
+async function claimLiquidityICP(
   identity: any,
   lockId: string,
   preimage: string
@@ -72,7 +75,7 @@ export async function claimLiquidityICP(
 /**
  * 🔄 Refunds locked liquidity after timelock expiration
  */
-export async function refundLiquidityICP(identity: any, lockId: string) {
+async function refundLiquidityICP(identity: any, lockId: string) {
   try {
     console.log('↩️ [ICP] Refunding liquidity...');
     const hashedTimeLockService = new HashedTimeLockService();
@@ -88,3 +91,9 @@ export async function refundLiquidityICP(identity: any, lockId: string) {
     throw error;
   }
 }
+
+export const ICPLiquidityService = {
+  lockLiquidityICP,
+  claimLiquidityICP,
+  refundLiquidityICP,
+};

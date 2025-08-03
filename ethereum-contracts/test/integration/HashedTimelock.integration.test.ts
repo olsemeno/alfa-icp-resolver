@@ -3,7 +3,7 @@ import { expect } from "chai";
 import { HashedTimeLock, LiquidityVault } from "../../typechain-types";
 import { findEvent } from "../utils/event-helpers";
 
-describe("HashedTimelock + LiquidityVault Integration", function () {
+describe("HashedTimeLock + LiquidityVault Integration", function () {
   let liquidityVault: LiquidityVault;
   let hashedTimeLock: HashedTimeLock;
   let owner: any;

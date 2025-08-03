@@ -1,7 +1,7 @@
 {
     "_format": "hh-sol-artifact-1",
     "contractName": "HashedTimeLock",
-    "sourceName": "contracts/HashedTimelock.sol",
+    "sourceName": "contracts/HashedTimeLock.sol",
     "abi": [
       {
         "inputs": [

@@ -4,9 +4,10 @@ import { ethers } from 'ethers';
 
 import { ICRC1Service } from '../services/icrc1Service';
 import { isEthereumAvailable, decodeEvmError } from '../utils/ethereum';
-import { lockLiquidityETH } from '../services/liquidity/ETHLiquidityService';
-import { lockLiquidityICP } from '../services/liquidity/ICPLiquidityService';
+import { EVMLiquidityService } from '../services/liquidity/EVMLiquidityService';
+import { ICPLiquidityService } from '../services/liquidity/ICPLiquidityService';
 import { generateSecretAndHashlockEVM, generateSecretAndHashlockICP, generateTimelockEVM, generateTimelockICP } from '../utils/hashlock';
+import { ResolverService } from '../services/ResolverService';
 
 import resolverAddresses from '../blockchain/resolver-addresses.json';
 import HashedTimeLockABI from '../blockchain/interfaces/evm/hashedTimeLock.evm.abi.json';
@@ -109,15 +110,15 @@ export const useExchange = () => {
       console.log("  - Amount:", amount);
       console.log("  - Wallet address:", walletState.eth.address);
 
-      const receipt = await lockLiquidityETH(
+      const receipt = await EVMLiquidityService.lockLiquidityETH(
         recipientAddress,
         hashlock,
         timelock,
         amount,
-        walletState
+        walletState.eth.signer
       );
 
-      console.log('Evm Time Lock transaction sent successfully:', receipt);
+      console.log('✅ Evm Time Lock transaction sent successfully:', receipt);
 
       return receipt;
     } catch (error: any) {
@@ -160,14 +161,14 @@ export const useExchange = () => {
       console.log("Timelock:", timelock);
       console.log("Amount:", amount);
   
-      const {txHash, timeLockResponse} = await lockLiquidityICP(
+      const {txHash, timeLockResponse} = await ICPLiquidityService.lockLiquidityICP(
         walletState.icp.identity,
         recipientAddress,
         hashlock,
         timelock,
         amount,
       )
-  
+      console.log('✅ ICP txHash:', txHash);
       console.log('✅ ICP Time Lock created:', timeLockResponse);
   
       return {
@@ -216,17 +217,47 @@ export const useExchange = () => {
         walletState
       );
 
+      console.log('✅ Evm Time Lock transaction sent successfully:', receipt);
+
       const event = receipt.logs.find(
         (log: any) => log.fragment?.name === "TimeLockContractCreated"
       );
 
-      const lockId = event?.args?.lockId;
-      console.log("🔑 Lock ID:", lockId);
+      console.log('✅ Evm Time Lock event:', event);
+
+      const lockIdEvm = event?.args?.lockId;
+      console.log("🔑 Lock ID:", lockIdEvm);
 
       // Save secret to local storage
-      localStorage.setItem(`secret:${lockId}`, secret);
+      localStorage.setItem(`secret:${lockIdEvm}`, secret);
 
-      alert(`Transaction sent successfully!\nTransaction Hash: ${receipt.hash}`);
+      const resolverService = new ResolverService(mockExchangeRates[0]);
+      const {txHash, timeLockResponse} = await resolverService.resolveEVMtoICP({
+        receiver: resolverIcpAddress,
+        hashlock: hashlock,
+        amountEvm: form.amount,
+      });
+
+      console.log('✅ ICP txHash:', txHash);
+      console.log('✅ ICP Time Lock created:', timeLockResponse);
+
+      const lockIdIcp = timeLockResponse.lock_id.toString();
+      console.log("🔑 Lock ID:", lockIdIcp);
+
+      const claimLiquidityResponse = await ICPLiquidityService.claimLiquidityICP(
+        walletState.icp.identity,
+        lockIdIcp,
+        secret
+      );
+
+      console.log('✅ ICP claimLiquidityResponse:', claimLiquidityResponse);
+
+      if (timeLockResponse.success) {
+        alert(`Transaction sent successfully!\nTransaction Hash: ${receipt.hash}`);
+      } else {
+        alert(`ICP Transaction failed: ${timeLockResponse.message}`);
+      }
+
     } catch (error: any) {
       console.error('Transfer error:', error);
       setTransferError(error.message || 'Transfer failed');
@@ -258,11 +289,54 @@ export const useExchange = () => {
         walletState
       );
 
-      const lockId = timeLockResponse.lock_id.toString();
-      console.log("🔑 Lock ID:", lockId);
+      const lockIdIcp = timeLockResponse.lock_id.toString();
+      console.log("🔑 1. Lock ID:", lockIdIcp);
 
       // Save secret to local storage
-      localStorage.setItem(`secret:${lockId}`, secret);
+      localStorage.setItem(`secret:${lockIdIcp}`, secret);
+
+      const resolverService = new ResolverService(mockExchangeRates[0]);
+      const receipt = await resolverService.resolveICPtoEVM({
+        receiver: walletState.eth.address,
+        hashlock: hashlock,
+        amountICP: form.amount,
+      });
+
+      console.log('✅ Evm Time Lock transaction sent successfully:', receipt);
+
+      const event = receipt.logs.find(
+        (log: any) => log.fragment?.name === "TimeLockContractCreated"
+      );
+
+      const lockIdEvm = event?.args?.lockId;
+      console.log("🔑 2. Lock ID:", lockIdEvm);
+      
+      try{
+        const claimLiquidityResponse = await EVMLiquidityService.claimLiquidityETH(
+          lockIdEvm,
+          secret,
+          walletState.eth.address,
+        );
+
+        console.log('✅ Evm claimLiquidityResponse:', claimLiquidityResponse);
+      } catch (error: any) {
+        console.log('❌+++ DECODE', error);
+        const decoded = decodeEvmError(HashedTimeLockABI.abi, error);
+  
+        if (decoded) {
+          console.error(`❌ Custom error: ${decoded.name}`);
+          if (decoded.args.length) {
+            console.error("📊 Args:", decoded.args.map(a => a.toString()));
+          }
+        } else {
+          console.error("❌ Unknown EVM error:", error);
+        }
+  
+        throw new Error(error.message || 'Failed to send transaction');
+      }
+      
+
+      
 
       alert(
         `ICP Transaction sent successfully!\nBlock index: ${txHash}\n` +
@@ -272,7 +346,7 @@ export const useExchange = () => {
       );
 
     } catch (error: any) {
-      console.error('ICP Transfer error:', error);
+      console.error('ICP Transfer error:', error.message);
 
       setTransferError(error.message || 'ICP Transfer failed');
 

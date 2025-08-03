@@ -1,7 +1,7 @@
 {
   "name": "hashed-time-lock",
   "version": "1.0.0",
-  "description": "Tests for Alfa ICP HashedTimelock Contract",
+  "description": "Tests for Alfa ICP HashedTimeLock Contract",
   "main": "index.js",
   "scripts": {
     "test": "jest",

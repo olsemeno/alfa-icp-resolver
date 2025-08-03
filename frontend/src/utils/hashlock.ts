@@ -58,3 +58,17 @@ export const generateTimelockICP = async (secondsFromNow: number = MIN_TIME_LOCK
 
   return BigInt(timelockEvm) * BigInt(1_000_000_000);
 };
+
+/** EVM → ICP */
+export function evmHashlockToIcp(evmHashlock: string): string {
+  return evmHashlock.startsWith("0x") 
+    ? evmHashlock.slice(2) // убираем 0x
+    : evmHashlock;
+}
+
+/** ICP → EVM */
+export function icpHashlockToEvm(icpHashlock: string): string {
+  return icpHashlock.startsWith("0x") 
+    ? icpHashlock // если вдруг кто-то передал с 0x — не трогаем
+    : `0x${icpHashlock}`;
+}
