@@ -1,17 +1,24 @@
 {
   "evm": {
     "localhost": {
-      "HashedTimeLock": "0x4A679253410272dd5232B3Ff7cF5dbB88f295319"
+      "HashedTimeLock": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
+    },
+    "arbitrum": {
+      "HashedTimeLock": ""
+    },
+    "arbitrumSepolia": {
+      "HashedTimeLock": ""
+    },
+    "arbitrumNova": {
+      "HashedTimeLock": ""
     }
   },
   "icp": {
     "localhost": {
-      "HashedTimeLock": "umunu-kh777-77774-qaaca-cai",
-      "Ledger": ""
+      "HashedTimeLock": ""
     },
-    "dev": {
-      "HashedTimeLock": "kz3el-raaaa-aaaaf-qbmia-cai",
-      "Ledger": "ryjl3-tyaaa-aaaaa-aaaba-cai"
+    "mainnet": {
+      "HashedTimeLock": ""
     }
   }
 }
